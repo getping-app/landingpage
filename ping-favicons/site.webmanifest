@@ -1,0 +1,30 @@
+{
+  "name": "ping",
+  "short_name": "ping",
+  "icons": [
+    {
+      "src": "ping-favicons/favicon-192x192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "ping-favicons/apple-touch-icon.png",
+      "type": "image/png",
+      "sizes": "180x180"
+    },
+    {
+      "src": "ping-favicons/favicon-32x32.png",
+      "type": "image/png",
+      "sizes": "32x32"
+    },
+    {
+      "src": "ping-favicons/favicon-16x16.png",
+      "type": "image/png",
+      "sizes": "16x16"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#9333ea"
+}

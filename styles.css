@@ -306,11 +306,13 @@ body {
 .card-title {
     font-weight: 600;
     color: #111827;
+    text-align: left;
 }
 
 .card-subtitle {
     font-size: 14px;
     color: #6b7280;
+    text-align: left;
 }
 
 /* Features Section */
