@@ -51,47 +51,59 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// Contact Form Handler
-document.addEventListener('DOMContentLoaded', function() {
-    const contactForm = document.getElementById('contactForm');
+// Toast notification system
+function showToast(title, description) {
+    const toast = document.getElementById('toast');
+    const toastTitle = toast.querySelector('.toast-title');
+    const toastDescription = toast.querySelector('.toast-description');
     
-    if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {            
-            // Get form data
-            const formData = new FormData(contactForm);
-            const data = Object.fromEntries(formData);
-            
-            // Simple validation
-            if (!data.name || !data.email || !data.subject || !data.message) {
-                alert('Please fill in all required fields.');
-                return;
-            }
-            
-            // Email validation
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(data.email)) {
-                alert('Please enter a valid email address.');
-                return;
-            }
-            
-            // // Simulate form submission
-            // const submitButton = contactForm.querySelector('.form-submit');
-            // const originalText = submitButton.innerHTML;
-            
-            // submitButton.innerHTML = '<span>Sending...</span>';
-            // submitButton.disabled = true;
-            
-            // // Simulate API call delay
-            // setTimeout(() => {
-            //     alert("Thank you for your message! We'll get back to you soon.");
-            //     contactForm.reset();
-            //     submitButton.innerHTML = originalText;
-            //     submitButton.disabled = false;
-            // }, 1500);
-            
-            console.log('Form submitted:', data);
+    toastTitle.textContent = title;
+    toastDescription.textContent = description;
+    
+    toast.classList.remove('hidden');
+    
+    setTimeout(() => {
+        toast.classList.add('hidden');
+    }, 4000);
+}
+
+// Contact form handling
+document.addEventListener('DOMContentLoaded', () => {
+  const contactForm = document.getElementById('contactForm');
+
+  contactForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const formData = new FormData(contactForm);
+
+    fetch(contactForm.action, {
+      method: 'POST',
+      body: formData,
+      headers: { 'Accept': 'application/json' }
+    })
+    .then(response => {
+      if (response.ok) {
+        showToast(
+          "Thank you for reaching out!",
+          "I’ll get back to you within 24 hours."
+        );
+        contactForm.reset();
+      } else {
+        return response.json().then(data => {
+          showToast(
+            "Oops—something went wrong.",
+            data.error || "Please try again later."
+          );
         });
-    }
+      }
+    })
+    .catch(() => {
+      showToast(
+        "Network error.",
+        "Please check your connection and try again."
+      );
+    });
+  });
 });
 
 // Smooth scrolling for anchor links
